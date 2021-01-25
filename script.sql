@@ -1,3 +1,5 @@
+-- Creacion de la base de datos y las tablas // Creating the database and tables
+
 -- creacion base de datos // creating database
 CREATE DATABASE prueba;
 
@@ -102,4 +104,31 @@ INSERT INTO invoices_list(id_invoice, id_product, amount) VALUES
 (8, 3, 3),
 (9, 5, 4),
 (10, 8, 1)
+;
+
+-- Creacion de consultas requeridas // Creation of required queries
+-- Primera consulta / First consult
+SELECT customers.id_customer AS id_clientes_que_pago_mas
+FROM customers 
+INNER JOIN invoices
+ON customers.id_customer = invoices.id_customer
+ORDER BY invoices.final_price DESC LIMIT 1
+;
+
+-- Segunda consulta / Second consult
+SELECT DISTINCT customers.id_customer AS id_clientes_que_compraron_sobre_100000
+FROM customers 
+INNER JOIN invoices
+ON customers.id_customer = invoices.id_customer 
+WHERE invoices.final_price >= 100000
+;
+
+-- Tercera consulta / Third consult
+SELECT COUNT(*) AS clientes_que_compraron_el_articulo_6
+FROM customers 
+INNER JOIN invoices
+ON customers.id_customer = invoices.id_customer
+INNER JOIN invoices_list
+ON invoices.invoice_number = invoices_list.id_invoice
+WHERE invoices_list.id_product = 6
 ;
